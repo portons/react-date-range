@@ -94,26 +94,36 @@ class Calendar extends Component {
     const year            = shownDate.year();
     const { styles }      = this;
     const { onlyClasses } = this.props;
+    const currentMonth    = this.props.maxDate && this.props.maxDate.diff(shownDate) === 0;
+    const lastMonth       = this.props.minDate && this.props.minDate.diff(shownDate) === 0;
 
     return (
       <div style={onlyClasses ? undefined : styles['MonthAndYear']} className={classes.monthAndYearWrapper}>
-        <button
-          style={onlyClasses ? undefined : { ...styles['MonthButton'], float : 'left' }}
-          className={classes.prevButton}
-          onClick={this.changeMonth.bind(this, -1)}>
-          <i style={onlyClasses ? undefined : { ...styles['MonthArrow'], ...styles['MonthArrowPrev'] }}></i>
-        </button>
+        {
+          !lastMonth &&
+          <button
+              style={onlyClasses ? undefined : { ...styles['MonthButton'], float : 'left' }}
+              className={classes.prevButton}
+              onClick={this.changeMonth.bind(this, -1)}>
+            <i style={onlyClasses ? undefined : { ...styles['MonthArrow'], ...styles['MonthArrowPrev'] }}></i>
+          </button>
+        }
+
         <span>
           <span className={classes.month}>{month}</span>
           <span className={classes.monthAndYearDivider}> - </span>
           <span className={classes.year}>{year}</span>
         </span>
-        <button
-          style={onlyClasses ? undefined : { ...styles['MonthButton'], float : 'right' }}
-          className={classes.nextButton}
-          onClick={this.changeMonth.bind(this, +1)}>
-          <i style={onlyClasses ? undefined : { ...styles['MonthArrow'], ...styles['MonthArrowNext'] }}></i>
-        </button>
+
+        {
+          !currentMonth &&
+          <button
+              style={onlyClasses ? undefined : { ...styles['MonthButton'], float : 'right' }}
+              className={classes.nextButton}
+              onClick={this.changeMonth.bind(this, +1)}>
+            <i style={onlyClasses ? undefined : { ...styles['MonthArrow'], ...styles['MonthArrowNext'] }}></i>
+          </button>
+        }
       </div>
     )
   }

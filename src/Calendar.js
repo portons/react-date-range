@@ -89,13 +89,13 @@ class Calendar extends Component {
   }
 
   renderMonthAndYear(classes) {
-    const shownDate       = this.getShownDate();
-    const month           = moment.months(shownDate.month());
-    const year            = shownDate.year();
-    const { styles }      = this;
-    const { onlyClasses } = this.props;
-    const currentMonth    = this.props.maxDate && this.props.maxDate.diff(shownDate) === 0;
-    const lastMonth       = this.props.minDate && this.props.minDate.diff(shownDate) === 0;
+    const { onlyClasses, maxDate, minDate } = this.props;
+    const shownDate    = this.getShownDate();
+    const month        = moment.months(shownDate.month());
+    const year         = shownDate.year();
+    const { styles }   = this;
+    const currentMonth = maxDate && maxDate.diff(shownDate) === 0;
+    const lastMonth    = minDate && minDate.diff(shownDate) >= 0;
 
     return (
       <div style={onlyClasses ? undefined : styles['MonthAndYear']} className={classes.monthAndYearWrapper}>
